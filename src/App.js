@@ -1,10 +1,13 @@
 import React from 'react';
-
+import {BrowserRouter} from "react-router-dom";
+import IndexRoute from './router';
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <IndexRoute />
+      </div>
+    </BrowserRouter>
   );
 }
 
