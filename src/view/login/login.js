@@ -1,13 +1,15 @@
 import React,{useState} from "react";
 import {connect} from "react-redux";
 import login from "../../store/action/login";
-
+import {withRouter} from "react-router-dom";
+import {useBack} from "../../common/hook/index";
 function LoginBox(props) {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [vcode, setVcode] = useState('');
   const [vcodeShow, setVcodeShow] = useState(false);
   const [vcodeSrc, setVcodeSrc] = useState('/miaov/user/verify?'+Date.now());
+  const back = useBack(props.history);
   function toLogin(){
     props.dispatch(login({
       verify: vcode,
@@ -16,10 +18,10 @@ function LoginBox(props) {
     })).then(data=>{
       alert(data.msg);
       setTimeout(()=> {
-        if(data.code != 0) {
+        if(data.code !== 0) {
           setVcodeSrc('/miaov/user/verify?'+Date.now());
         } else {
-  
+          back();
         }
       }, 100);
     });
@@ -111,4 +113,4 @@ function LoginBox(props) {
     </div>
   );
 }
-export default connect(res=>res)(LoginBox);
+export default connect(res=>res)(withRouter(LoginBox));
